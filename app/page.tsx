@@ -9,6 +9,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { toast } from "@/hooks/use-toast"
 import { ShoppingCart, CreditCard, Mail, AlertCircle, CheckCircle2 } from "lucide-react"
 import Image from "next/image"
+import { setCuid, trackAddToCart, trackPurchase, trackLogin } from "@/lib/appsflyer"
 
 export default function EcommercePage() {
   const [email, setEmail] = useState("")
@@ -22,7 +23,6 @@ export default function EcommercePage() {
         title: "Email Required",
         description: "Please enter a valid email address.",
         variant: "destructive",
-        icon: <AlertCircle className="h-4 w-4" />,
       })
       return
     }
@@ -35,17 +35,20 @@ export default function EcommercePage() {
       await new Promise((resolve) => setTimeout(resolve, 500)) // Simulate network delay
 
       setUserId(email)
+      
+      // AppsFlyer: Set customer user ID and track login event
+      setCuid(email)
+      trackLogin()
+      
       toast({
         title: "Email Set",
         description: `User ID set to: ${email}`,
-        icon: <CheckCircle2 className="h-4 w-4" />,
       })
     } catch (error) {
       toast({
         title: "Submission Error",
         description: "Could not set email. Please try again.",
         variant: "destructive",
-        icon: <AlertCircle className="h-4 w-4" />,
       })
     } finally {
       setIsSubmittingEmail(false)
@@ -81,7 +84,6 @@ export default function EcommercePage() {
         toast({
           title: `${eventType === "purchase" ? "Purchase" : "Add to Cart"} Successful`,
           description: `Event sent for user: ${currentUserId}`,
-          icon: <CheckCircle2 className="h-4 w-4" />,
         })
       } else {
         throw new Error(`Failed to send ${eventType} event`)
@@ -91,17 +93,33 @@ export default function EcommercePage() {
         title: "Event Error",
         description: `Could not send ${eventType} event. Please try again.`,
         variant: "destructive",
-        icon: <AlertCircle className="h-4 w-4" />,
       })
     }
   }
 
   const handlePurchase = () => {
+    // Send to existing API
     sendEvent("purchase", "/api/events/purchase")
+    
+    // AppsFlyer: Track purchase event
+    trackPurchase({
+      sku: "PROD123",
+      price: 29.99,
+      quantity: 1,
+      currency: "USD"
+    })
   }
 
   const handleAddToCart = () => {
+    // Send to existing API
     sendEvent("add_to_cart", "/api/events/add-to-cart")
+    
+    // AppsFlyer: Track add to cart event
+    trackAddToCart({
+      sku: "PROD123",
+      price: 29.99,
+      name: "The Awesome Product"
+    })
   }
 
   return (
