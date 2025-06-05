@@ -135,40 +135,8 @@ export default function EcommercePage() {
           </h1>
         </div>
         <p className="text-xl text-slate-400 max-w-2xl mx-auto">
-          Experience our e-commerce platform with integrated AppsFlyer Web SDK tracking
+          A simple demo page to easily test AppsFlyer Web SDK integration and event tracking
         </p>
-        <div className="mt-4 inline-flex items-center px-4 py-2 bg-green-500/10 rounded-full border border-green-500/30">
-          <CheckCircle2 className="h-4 w-4 text-green-400 mr-2" />
-          <span className="text-sm text-green-300">Live Event Tracking Active</span>
-        </div>
-      </div>
-
-      {/* Product Showcase */}
-      <div className="max-w-4xl mx-auto px-4 mb-12">
-        <Card className="bg-white/5 backdrop-blur-lg border-white/10 shadow-2xl">
-          <CardContent className="p-8">
-            <div className="flex flex-col md:flex-row items-center space-y-6 md:space-y-0 md:space-x-8">
-              <div className="flex-shrink-0">
-                <Image
-                  src="/placeholder.svg?width=200&height=200"
-                  alt="The Awesome Product"
-                  width={200}
-                  height={200}
-                  className="rounded-xl object-cover shadow-lg"
-                />
-              </div>
-              <div className="text-center md:text-left">
-                <h2 className="text-3xl font-bold text-white mb-2">The Awesome Product</h2>
-                <p className="text-slate-400 text-lg mb-4">Premium quality, innovative design, and exceptional value.</p>
-                <div className="flex items-center justify-center md:justify-start space-x-4">
-                  <span className="text-4xl font-bold text-blue-400">$29.99</span>
-                  <span className="text-slate-500 line-through text-lg">$49.99</span>
-                  <span className="bg-red-500 text-white px-3 py-1 rounded-full text-sm font-semibold">40% OFF</span>
-                </div>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
       </div>
 
       {/* Three Action Cards */}
